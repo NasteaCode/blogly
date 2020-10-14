@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+<h1>Users</h1>
+<ul>
+  {% for user in users %}
+  <li><a href="">{{ user.first_name }} {{ user.last_name}}</a></li>
+  <!--        ^ check if we need href       ^ check if we need to create an instance  -->
+  {% endfor %}
+</ul>
+
+<button name="add-user">Add user</button>
