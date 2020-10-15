@@ -41,7 +41,7 @@ def process_add_form():
     image_url = request.form("image-url")
 
     new_user = User(first_name, last_name, image_url)
-    db.session.add(user)
+    db.session.add(new_user)
     db.session.commit()
     
     return redirect("/users")
