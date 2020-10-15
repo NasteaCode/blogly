@@ -23,7 +23,9 @@ def redirect_list_users():
 @app.route("/users")
 def user_listing():
     
-    return render_template("user_listing.html") 
+    users_list = User.query.all()
+
+    return render_template("user_listing.html", users=users_list) 
 
 # GET /users/new   
 @app.route("/users/new")
@@ -36,13 +38,24 @@ def show_add_form():
 def process_add_form():
 
     
-    first_name = request.form("first-name")
-    last_name = request.form("last-name")
-    image_url = request.form("image-url")
+    first_name = request.form.get("first-name")
+    last_name = request.form.get("last-name")
+    image_url = request.form.get("image-url")
 
     new_user = User(first_name, last_name, image_url)
+
     db.session.add(new_user)
     db.session.commit()
     
     return redirect("/users")
+
+
+# GET /users/[user-id]
+@app.route("/users/<int:id>")
+def user_page(id):
+
+    user_id = User.query.get_or_404(id)
+
+    return render_template("user_detail.html", user=user_id)
+
 

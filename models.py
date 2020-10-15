@@ -27,8 +27,11 @@ class User(db.Model):
                           unique=False)
     
     image_url = db.Column(db.String(50),
-                          nullable=False,
-                          unique=True)
+                          nullable=True,
+                          unique=False)
     
 
-   
+    def __init__(self, first_name, last_name, image_url):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.image_url = image_url
