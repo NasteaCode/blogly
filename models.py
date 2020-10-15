@@ -26,12 +26,12 @@ class User(db.Model):
                           nullable=False,
                           unique=False)
     
-    image_url = db.Column(db.String(50),
+    image_url = db.Column(db.String(120),
                           nullable=True,
                           unique=False)
     
-
-    def __init__(self, first_name, last_name, image_url):
-        self.first_name = first_name
-        self.last_name = last_name
-        self.image_url = image_url
+    # don't need if instance syntax is used from alchemy
+    # def __init__(self, first_name, last_name, image_url):
+    #     self.first_name = first_name
+    #     self.last_name = last_name
+    #     self.image_url = image_url

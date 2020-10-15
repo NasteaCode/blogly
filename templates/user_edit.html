@@ -4,21 +4,23 @@
 {% block body %}
 <h1>Edit a user</h1>
 
-<form action="">
+<form action="/users/{{user.id}}/edit" method="POST">
   <div>
     <label for="">First Name</label>
-    <input type="text" name="first_name" placeholder="First name here">
+    <input type="text" name="first_name" value="{{ user.first_name }}">
   </div>
 
   <div>
     <label for="">Last Name</label>
-    <input type="text" name="last_name" placeholder="Last name here">
+    <input type="text" name="last_name" value="{{ user.last_name }}">
   </div>
 
   <div>
     <label for="">Image URL</label>
-    <input type="text" name="profile_pic" placeholder="Your profile picture">
+    <input type="text" name="profile_pic" value= "{{ user.image_url }}">
   </div>
-  <button>Cancel</button><button>Save</button>
+  
+  <button>Cancel</button>
+  <button>Save</button>
 </form>
 {% endblock body %}

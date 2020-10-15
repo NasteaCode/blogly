@@ -2,18 +2,25 @@
 
 {% block body %}
 <span>
-  <!-- fix image with src -->
-  <img src="https://www.dogtime.com/assets/uploads/2018/10/puppies-cover.jpg" alt=""></span>
+  <!-- testing image -->
+  <img src="https://www.dogtime.com/assets/uploads/2018/10/puppies-cover.jpg" alt="">
+</span>
+  
+  <!-- if user adds an image, add jinja code -->
+  <img src = "{{ user.image_url }} " alt="">
+
 <span>
   <h1> {{ user.first_name }} {{ user.last_name }}</h1>
 </span>
 
 <br>
+
 <span>
   
-  <button>Edit</button> 
+  <a href="/users/{{ user.id }}/edit"><button>Edit</button></a>
   
-  <button>Delete</button>
+  <a href="/users/{{ user.id }}/delete"><button>Delete</button></a>
+
 
 </span>
 {% endblock body %}

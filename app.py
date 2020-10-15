@@ -42,7 +42,7 @@ def process_add_form():
     last_name = request.form.get("last-name")
     image_url = request.form.get("image-url")
 
-    new_user = User(first_name, last_name, image_url)
+    new_user = User(first_name=first_name, last_name=last_name, image_url=image_url)
 
     db.session.add(new_user)
     db.session.commit()
@@ -54,8 +54,40 @@ def process_add_form():
 @app.route("/users/<int:id>")
 def user_page(id):
 
-    user_id = User.query.get_or_404(id)
+    user = User.query.get_or_404(id)
 
-    return render_template("user_detail.html", user=user_id)
+    return render_template("user_detail.html", user=user)
+
+# GET /users/[user-id]/edit
+@app.route("/users/<int:id>/edit")
+def show_edit_user(id):
+
+    user = User.query.get_or_404(id)
+
+    return render_template("user_edit.html", user=user)
 
 
+# POST /users/[user-id]/edit
+@app.route("/users/<int:id>/edit", methods=["POST"])
+def update_user(id):
+
+    user = User.query.get(id)
+    user.first_name = request.form.get("first_name")
+    user.last_name = request.form.get("last_name")
+    user.image_url = request.form.get("image_url")
+    
+    db.session.commit()
+
+    return redirect("/users")
+
+# POST /users/[user-id]/delete
+@app.route("/users/<int:id>/delete")
+def delete_user(id):
+
+    user = User.query.get(id)
+
+    db.session.delete(user)
+
+    db.session.commit()
+
+    return redirect("/users")
