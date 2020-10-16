@@ -26,13 +26,13 @@ def user_listing():
     
     users_list = User.query.all()
 
-    return render_template("user_listing.html", users=users_list) 
+    return render_template("users.html", users=users_list) 
 
 # GET /users/new   
 @app.route("/users/new")
 def show_add_form():
 
-    return render_template("new_user_form.html")
+    return render_template("users/new.html")
 
 # POST /users/new
 @app.route("/users/new", methods=["POST"])
@@ -57,7 +57,7 @@ def user_page(id):
 
     user = User.query.get_or_404(id)
     # breakpoint()
-    return render_template("user_detail.html", user=user)
+    return render_template("users/[user-id].html", user=user)
 
 # GET /users/[user-id]/edit
 @app.route("/users/<int:id>/edit")
@@ -65,7 +65,7 @@ def show_edit_user(id):
 
     user = User.query.get_or_404(id)
 
-    return render_template("user_edit.html", user=user)
+    return render_template("users/[user-id]/edit.html", user=user)
 
 
 # POST /users/[user-id]/edit
@@ -99,7 +99,7 @@ def show_add_post_form(id):
 
     user = User.query.get_or_404(id)
 
-    return render_template("new_post_form.html", user=user)
+    return render_template("/users/[user-id]/posts/new.html", user=user)
 
 # POST /users/[user-id]/posts/new
 @app.route("/users/<int:id>/posts/new", methods=["POST"])
@@ -115,3 +115,36 @@ def add_post(id):
     db.session.commit()
     
     return redirect(f"/users/{id}")
+
+# GET /posts/[post-id]
+@app.route("/posts/<int:post_id>")
+def show_post(post_id):
+
+    post = Post.query.get_or_404(post_id)
+    return render_template("/posts/[post-id].html", post=post)
+
+# GET /posts/[post-id]/edit
+@app.route("/posts/<int:post_id>/edit")
+def show_post_edit_form(post_id):
+
+    post = Post.query.get_or_404(post_id)
+    return render_template("/posts/[post-id]/edit.html", post=post)
+
+# POST /posts/[post-id]/edit
+# @app.route("/posts/<int:post_id>/edit")
+# def edit_post(post_id):
+
+
+
+# POST /posts/[post-id]/delete
+@app.route("/posts/<int:post_id>/delete", methods=["POST"])
+def delete_post(post_id):
+
+    post = POST.query.get_or_404(post_id)
+
+    db.session.delete(post)
+
+    db.session.commit()
+
+    return redirect(f"/users/{post.user_id}")
+

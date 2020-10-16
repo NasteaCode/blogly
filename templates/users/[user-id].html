@@ -23,16 +23,14 @@
 
 </span>
 
-<h1>Posts</h1>
+<h2>Posts</h2>
 
   <ul>
- 
 
     {% for post in user.post %}
     <li>
     <a href="/posts/{{post.id}}"> {{ post.title }} </a>
         <!-- date -->
-        <p>hello</p>
     </li>
     {% endfor %}
   </ul>
