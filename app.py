@@ -1,5 +1,6 @@
 from flask import Flask, request, redirect, render_template
-from models import db, connect_db, User
+from models import db, connect_db, User, Post
+# import DateNow
 
 """Blogly application."""
 
@@ -55,7 +56,7 @@ def process_add_form():
 def user_page(id):
 
     user = User.query.get_or_404(id)
-
+    # breakpoint()
     return render_template("user_detail.html", user=user)
 
 # GET /users/[user-id]/edit
@@ -91,3 +92,26 @@ def delete_user(id):
     db.session.commit()
 
     return redirect("/users")
+
+# GET /users/[user-id]/posts/new
+@app.route("/users/<int:id>/posts/new")
+def show_add_post_form(id):
+
+    user = User.query.get_or_404(id)
+
+    return render_template("new_post_form.html", user=user)
+
+# POST /users/[user-id]/posts/new
+@app.route("/users/<int:id>/posts/new", methods=["POST"])
+def add_post(id):
+
+    title = request.form.get("title")
+    content = request.form.get("content")
+    user = User.query.get_or_404(id)
+
+    new_post = Post(title=title, content=content, user=user)
+
+    db.session.add(new_post)
+    db.session.commit()
+    
+    return redirect(f"/users/{id}")

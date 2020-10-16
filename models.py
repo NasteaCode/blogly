@@ -1,3 +1,4 @@
+import datetime
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -30,8 +31,32 @@ class User(db.Model):
                           nullable=True,
                           unique=False)
     
+    post = db.relationship("Post")
+    
     # don't need if instance syntax is used from alchemy
     # def __init__(self, first_name, last_name, image_url):
     #     self.first_name = first_name
     #     self.last_name = last_name
     #     self.image_url = image_url
+
+class Post(db.Model):
+
+    __tablename__ = "posts"
+
+    id = db.Column(db.Integer,
+                   primary_key=True,
+                   autoincrement=True)
+
+    title = db.Column(db.String(50),
+                      nullable=False)
+
+    content = db.Column(db.String(1000),
+                        nullable=False)
+
+    created_at = db.Column(db.DateTime, default=datetime.datetime.now)
+                           
+    
+    user_id = db.Column(db.Integer,
+                        db.ForeignKey('users.id'))
+
+    user = db.relationship("User")

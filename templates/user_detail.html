@@ -17,10 +17,26 @@
 
 <span>
   
-  <a href="/users/{{ user.id }}/edit"><button>Edit</button></a>
-  
-  <a href="/users/{{ user.id }}/delete"><button>Delete</button></a>
-
+    <a href="/users/{{ user.id }}/edit"><button>Edit</button></a>
+    
+    <a href="/users/{{ user.id }}/delete"><button>Delete</button></a>
 
 </span>
+
+<h1>Posts</h1>
+
+  <ul>
+ 
+
+    {% for post in user.post %}
+    <li>
+    <a href="/posts/{{post.id}}"> {{ post.title }} </a>
+        <!-- date -->
+        <p>hello</p>
+    </li>
+    {% endfor %}
+  </ul>
+
+  <a href="/users/{{ user.id }}/posts/new"><button>Add Post</button></a>
+  <!-- We will come back to this -->
 {% endblock body %}
